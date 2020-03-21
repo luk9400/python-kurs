@@ -6,12 +6,11 @@ import sys
 
 
 def rename(path):
-    print(os.listdir())
-    for filename in os.listdir():
-        os.rename(path + '/' + filename, path + '/' + filename.lower())
-        if os.path.isdir(path + '/' + filename.lower()):
-            rename(path + '/' + filename.lower())
-    print(os.listdir())
+    for filename in os.listdir(path):
+        new_path = path + '/' + filename.lower()
+        os.rename(path + '/' + filename, new_path)
+        if os.path.isdir(new_path):
+            rename(new_path)
 
 
 if __name__ == '__main__':
