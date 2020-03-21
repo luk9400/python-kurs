@@ -3,6 +3,7 @@
 
 import sys
 
+
 def wordcount(filename):
     with open(filename, 'r') as f:
         lines = 0
@@ -14,13 +15,14 @@ def wordcount(filename):
             byte_count += len(bytes(line, 'utf8'))
             words += len(line.split())
             if len(line) > max_length:
-                    max_length = len(line)
-            
-        print('Bytes: ', byte_count) 
+                max_length = len(line)
+
+        print('Bytes: ', byte_count)
         print('Words: ', words)
         print('Lines: ', lines)
-        print('Longest line: ', max_length)       
+        print('Longest line: ', max_length)
         return byte_count, words, lines, max_length
+
 
 if __name__ == '__main__':
     filename = sys.argv[1]

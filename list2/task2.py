@@ -5,6 +5,7 @@ import sys
 
 table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 
+
 def encode(filename):
     result = ''
     with open(filename, 'rb') as f:
@@ -21,7 +22,7 @@ def encode(filename):
             for i in range(0, 24, 6):
                 print(bitstring[i:i+6])
                 result += table[int(bitstring[i:i+6], base=2)]
-                
+
             print(bitstring)
         return result
 
@@ -33,14 +34,15 @@ def decode(filename):
             batch = f.read(4)
             if not batch:
                 break
-            
+
             batch_bitstring = ''
             for char in batch:
                 batch_bitstring += bin(table.index(char))[2:].rjust(6, '0')
 
             print(batch_bitstring)
             for i in range(0, 24, 8):
-                byte = int(batch_bitstring[i: i + 8], base=2).to_bytes(1, 'big')
+                byte = int(batch_bitstring[i: i + 8],
+                           base=2).to_bytes(1, 'big')
                 print(byte)
                 if byte != b'\x00':
                     result += byte
@@ -53,5 +55,3 @@ if __name__ == '__main__':
         print(encode(sys.argv[2]))
     elif sys.argv[1] == '--decode':
         print(decode(sys.argv[2]))
-    
-    

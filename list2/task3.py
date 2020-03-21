@@ -7,10 +7,10 @@ import sys
 
 def rename(path):
     print(os.listdir())
-    for file in os.listdir():
-        os.rename(path + '/' + file, path + '/' + file.lower())
-        if os.path.isdir(path + '/' + file.lower()):
-            rename(path + '/' + file.lower())
+    for filename in os.listdir():
+        os.rename(path + '/' + filename, path + '/' + filename.lower())
+        if os.path.isdir(path + '/' + filename.lower()):
+            rename(path + '/' + filename.lower())
     print(os.listdir())
 
 

@@ -2,6 +2,7 @@ import hashlib
 import os
 import sys
 
+
 def info_crawler(path, file_info={}):
     for dirpath, dirnames, filenames in os.walk(path):
         for file in filenames:
@@ -10,7 +11,7 @@ def info_crawler(path, file_info={}):
                 key = dirpath + file
             else:
                 key = dirpath + '/' + file
-            
+
             file_info[key] = {
                 "size": os.path.getsize(dirpath + '/' + file),
                 "hash": file_hash(dirpath + '/' + file),
@@ -30,7 +31,7 @@ def repchecker(path):
         file_info[file]['checked'] = True
         found_copy = False
         for file2 in file_info:
-            if not file_info[file2]['checked'] and file_info[file]['size'] == file_info[file2]['size'] and  file_info[file]['hash'] == file_info[file2]['hash']:
+            if not file_info[file2]['checked'] and file_info[file]['size'] == file_info[file2]['size'] and file_info[file]['hash'] == file_info[file2]['hash']:
                 file_info[file2]['checked'] = True
                 found_copy = True
                 print(file2)
