@@ -105,10 +105,28 @@ def encrypt_char(char, key):
     return str(pow(ord(char), e, n))
 
 
+def encrypt_message(message, key):
+    return ":".join(encrypt_char(char, key) for char in message)
+
+
+def decrypt_char(char, key):
+    n, d = key
+    return chr(pow(int(char), d, n))
+
+
+def decrypt_message(message, key):
+    return "".join(decrypt_char(char, key) for char in message.split(":"))
+
 if __name__ == '__main__':
     if sys.argv[1] == '--gen-keys':
         create_keys(int(sys.argv[2]))
     elif sys.argv[1] == '--encrypt':
-        pass
+        with open('key.pub', 'r') as f:
+            key = [int(k, 16) for k in f.read().split()]
+            print(encrypt_message(sys.argv[2], key))
     elif sys.argv[1] == '--decrypt':
-        pass
+        with open('key.prv', 'r') as f:
+            key = [int(k, 16) for k in f.read().split()]
+            print(decrypt_message(sys.argv[2], key))
+    else:
+        print("task5.py [--gen-keys length] [--encrypt message] [--decrypt message]")
