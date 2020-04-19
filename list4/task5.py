@@ -2,6 +2,7 @@
 
 from cmath import exp
 from math import pi
+import numpy as np
 
 
 class FastBigNum:
@@ -53,9 +54,35 @@ class FastBigNum:
         return FastBigNum(str(res))
 
 
+class FastBigNumPy:
+    def __init__(self, number):
+        self.number = number
+        self.length = len(number)
+
+    def __str__(self):
+        return self.number
+
+    def __mul__(self, other):
+        x_star = np.fft.fft(
+            list(map(int, list("".join([self.number, self.length * "0"]))))
+        )
+        y_star = np.fft.fft(
+            list(map(int, list("".join([other.number, other.length * "0"]))))
+        )
+        z_star = x_star * y_star
+        result = np.fft.ifft(z_star)
+        result = list(map(int, list(map(round, result))))[:-1]
+        res = 0
+        for i, z in enumerate(result[::-1]):
+            res += z * 10 ** i
+        return FastBigNumPy(str(res))
+
+
 A = "1312312231232131231231231231231231212331233231349"
 B = "1212312311223123121312312321321231231112323123231"
 
 a = FastBigNum(A)
 b = FastBigNum(B)
-print(a * b * a)
+print((a * b) * (a * b))
+
+# print(int(A) * int(B) * int(A) * int(B))
