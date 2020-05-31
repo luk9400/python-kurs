@@ -98,3 +98,5 @@ if __name__ == "__main__":
     print("OR")
     y = np.array([[0], [1], [1], [1]])
     test(X, y)
+
+# ostatnia kolumna to bias
